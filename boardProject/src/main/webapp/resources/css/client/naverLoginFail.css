@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#wrapper {
+	text-align: center;
+	position: relative;
+	height: 100%;
+}
+
+#content {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+	width: 800px;
+}
+
+img {
+	width: 100px;
+	height: 100px;
+}
+
+.naSpan {
+	line-height: 100px;
+	vertical-align: top;
+	height: 100px;
+}
+
+#midContent {
+	margin-top: 30px;
+}
+
+.rowbtn {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.bWrap {
+	padding: 15px 0;
+	width: 218px;
+	border-color: #196ab3;
+	background-color: #196ab3;
+	display: inline-block;
+	vertical-align: top;
+	cursor: pointer;
+	color: white;
+	font-size: 20px;
+	text-decoration: none;
+}
+
+.bWrap:hover{
+	text-decoration: none;
+	color: white;
+}

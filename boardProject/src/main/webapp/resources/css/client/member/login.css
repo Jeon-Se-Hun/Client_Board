@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.login {
+	text-align: center;
+	margin-top: 150px;
+	height: 300px;
+}
+
+img {
+	width: 223px;
+	margin: 3px;
+}
+
+h2 {
+	text-align: center;
+}
+
+input[type="text"], input[type="password"] {
+	width: 200px;
+	margin: 5px;
+	padding: 5px;
+}
+
+#login{
+	width: 220px;
+	margin: 5px;
+	padding: 5px;
+	border-radius: 10px;
+	border-style: none;
+}

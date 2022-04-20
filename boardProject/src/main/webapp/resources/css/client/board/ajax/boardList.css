@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+.ta_c {
+	text-align: center;
+}
+
+#boardTable tr th, td {
+	text-align: center;
+}
+
+.tm_c{
+	margin-left:auto; 
+    margin-right:auto;
+    margin-top: 50px;
+}
+
+.btn {
+	font-weight: 550;
+	border-radius: 0.4em;
+	background-color: #eeeeee;
+	width: 100px;
+	height: 27px;
+}
+
+.float_r{
+	float: right;
+}
+
+.wd_80 {
+	width: 80%;
+}
+
+.wd_100 {
+	width : 100px;
+}
+
+a:link {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+ 
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+ 
+/* paginate */
+.paginate {
+    padding: 0;
+    line-height: normal;
+    text-align: center;
+    position: relative;
+    margin: 20px 0 20px 0;
+    z-index: 1;
+}
+ 
+.paginate .paging {
+    text-align: center;
+}
+ 
+.paginate .paging a, .paginate .paging strong {
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: #848484;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 12px;
+}
+ 
+.paginate .paging a:hover, .paginate .paging strong {
+    color: #DAA520;
+    font-weight: 600;
+    font-weight: normal;
+}
+ 
+.paginate .paging .direction {
+    z-index: 3;
+    vertical-align: middle;
+    background-color: none;
+    margin: 0 2px;
+    border: 1px solid #777;
+    border-radius: 2px;
+    width: 28px;
+}
+ 
+.paginate .paging .direction:hover {
+    border: 1px solid #C40639;
+}
+ 
+.paginate .paging .direction.prev {
+    margin-right: 4px;
+}
+ 
+.paginate .paging .direction.next {
+    margin-left: 4px;
+    cursor: pointer;
+}
+ 
+.paginate .paging img {
+    vertical-align: middle;
+}
+ 
+.paginate .right {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.UpDownBtn{
+	width: 50px;
+	height: 30px;
+	border: 0px solid;
+	background: silver;
+	font-size: 20px;	
+}
+
+.lock_icon{
+	width: 15px;
+	height: 15px;
+}

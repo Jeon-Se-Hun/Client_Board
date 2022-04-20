@@ -1,0 +1,43 @@
+server:
+  port: 8088
+  servlet:                # 세선 시간
+    session:
+      timeout: 15m      # 60m * 24h * 30d -> 15분으로 변경
+      cookie:
+        max-age: 43200m    # 60m * 24h * 30d
+        name: SID
+        http-only: true
+        secure: true
+        
+spring :
+  #### DB
+  datasource : 
+    driver-class-name : oracle.jdbc.OracleDriver
+    url : jdbc:oracle:thin:@localhost:1521/xe
+    username : project1
+    password : project1
+  
+  ### 내용 갱신 시 서버 reloading
+  devtools :
+    livereload :
+      enabled : true
+      
+  ### view page
+  mvc : 
+    view :
+      prefix : /views/
+      suffix : .jsp
+      
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+###mybatis 설정
+
+mybatis:
+  mapper-locations: mapper/**/*.xml
+  type-aliases-package: com.example.demo.mapper/**
+  

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.CommentMapper">
+	<insert id="commentInsert" parameterType="HashMap">
+		INSERT INTO BOARD_COMMENT
+		(
+			COM_KEY_ID
+			,BOR_KEY_ID
+			,CONTENT
+			,PID
+		)
+		VALUES
+		(
+			#{com_key_id}
+			,#{bor_key_id}
+			,#{content}
+			,#{pid}
+		)
+	</insert>
+	
+	<update id="commentDelete" parameterType="HashMap">
+		UPDATE
+			BOARD_COMMENT
+		SET
+			DEL_YN = 'Y'
+			,UP_DATE = SYSDATE
+		WHERE
+			COM_KEY_ID = #{com_key_id}
+	</update>
+	
+	<update id="commentModify" parameterType="HashMap">
+		UPDATE
+			BOARD_COMMENT
+		SET
+			CONTENT = #{content}
+			,UP_DATE = SYSDATE
+		WHERE
+			COM_KEY_ID = #{com_key_id}
+	</update>
+	
+	<select id="commentTotalCnt" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			BOARD_COMMENT
+		WHERE
+			BOR_KEY_ID = #{bor_key_id}
+			AND DEL_YN = 'N'
+	</select>
+	
+	<sql id="orderType">
+		<choose>
+			<when test="orderType == 'REPLY_CNT'.toString">
+				NVL(BASIC.CNT,0) DESC,
+			</when>
+			
+			<when test="orderType == 'GOOD_CNT'.toString || orderType == 'BAD_CNT'.toString">
+				NVL(LIKE_TO.${orderType},0) DESC,
+			</when>
+		</choose>
+	</sql>
+	
+	<select id="list" resultType="HashMap">
+		SELECT
+    		TMP.*
+		FROM(
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY <include refid="orderType" /> REG_DATE DESC) AS NUM
+		    	,COMM.COM_KEY_ID
+		    	,(SELECT NICKNAME FROM MEMBER WHERE PID = COMM.PID) AS NICKNAME
+		    	,COMM.PID
+		    	,COMM.CONTENT
+		    	,TO_CHAR(COMM.REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+                ,NVL(LIKE_TO.GOOD_CNT,0) AS GOOD_CNT
+                ,NVL(LIKE_TO.BAD_CNT,0) AS BAD_CNT
+		    	,NVL(BASIC.CNT,0) AS REPLY_CNT
+			FROM
+		    	BOARD_COMMENT COMM
+			LEFT JOIN(
+				SELECT
+		    		COM_KEY_ID
+		    		,COUNT(*) AS CNT
+		  		FROM
+		    		BOARD_REPLY_COMMENT
+		    	WHERE
+		    		DEL_YN = 'N'
+		 		GROUP BY
+		    		COM_KEY_ID
+			)BASIC
+			ON COMM.COM_KEY_ID = BASIC.COM_KEY_ID
+			LEFT JOIN
+                (SELECT
+		    		COM_KEY_ID
+                    ,COUNT(CASE WHEN LIKE_CHECK='G' THEN 1 END) AS GOOD_CNT
+                    ,COUNT(CASE WHEN LIKE_CHECK='B' THEN 1 END) AS BAD_CNT
+		  		FROM
+		    		LIKE_TO
+		 		GROUP BY
+		    		COM_KEY_ID
+			)LIKE_TO
+			ON COMM.COM_KEY_ID = LIKE_TO.COM_KEY_ID
+			WHERE
+		    	COMM.BOR_KEY_ID = #{bor_key_id}
+		    	AND COMM.DEL_YN = 'N'
+		)TMP
+		<if test="firstRecordIndex !=null and lastRecordIndex != null">
+	    WHERE 
+	      	TMP.NUM BETWEEN #{firstRecordIndex} AND #{lastRecordIndex}
+	    </if>
+	</select>
+	
+	<select id="likeCheck" resultType="String">
+		SELECT
+			LIKE_CHECK
+		FROM
+			LIKE_TO
+		WHERE
+			COM_KEY_ID = #{com_key_id}
+			AND PID = #{pid}
+	</select>
+	
+	<insert id="likeInsert" parameterType="HashMap">
+		INSERT INTO LIKE_TO
+		(
+			LIKE_KEY_ID
+			,COM_KEY_ID
+			,PID
+			,LIKE_CHECK
+		)
+		VALUES
+		(
+			#{like_key_id}
+			,#{com_key_id}
+			,#{pid}
+			,#{like_check}
+		)
+	</insert>
+	
+	<update id="likeUpdate" parameterType="HashMap">
+		UPDATE
+			LIKE_TO
+		SET
+			LIKE_CHECK = #{like_check}
+		WHERE
+			COM_KEY_ID = #{com_key_id}
+			AND PID = #{pid}
+	</update>
+	
+	<select id="likeList" resultType="HashMap">
+		SELECT
+    		LIKE_KEY_ID
+    		,like_to.COM_KEY_ID
+    		,PID
+    		,LIKE_CHECK
+		FROM
+    		LIKE_TO like_to
+		LEFT JOIN(
+			SELECT
+    			COM_KEY_ID
+    			,BOR_KEY_ID
+			FROM
+    			BOARD_COMMENT
+			WHERE
+    			BOR_KEY_ID = #{bor_key_id}
+		)BASIC
+		ON  like_to.COM_KEY_ID = BASIC.COM_KEY_ID
+		WHERE
+			PID = #{pid}
+			AND BASIC.BOR_KEY_ID IS NOT NULL
+	</select>
+	
+	<select id="replyTotalCnt" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			BOARD_REPLY_COMMENT
+		WHERE
+			COM_KEY_ID = #{com_key_id}
+			AND DEL_YN = 'N'
+	</select>
+	
+	<select id="replyList" resultType="HashMap">
+		SELECT
+    		TMP.*
+		FROM(
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY REG_DATE DESC) AS NUM
+                ,REPLY_KEY_ID
+		    	,(SELECT NICKNAME FROM MEMBER WHERE PID = REPLY.PID) AS NICKNAME
+		    	,PID
+		    	,CONTENT
+		    	,TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+			FROM
+		    	BOARD_REPLY_COMMENT REPLY
+			WHERE
+		    	COM_KEY_ID = #{com_key_id}
+		    	AND DEL_YN = 'N'
+		)TMP
+		<if test="firstRecordIndex !=null and lastRecordIndex != null">
+	    WHERE 
+	      	TMP.NUM BETWEEN #{firstRecordIndex} AND #{lastRecordIndex}
+	    </if>
+	</select>
+	
+	<insert id="replyInsert" parameterType="HashMap">
+		INSERT INTO BOARD_REPLY_COMMENT
+		(
+			 REPLY_KEY_ID
+			,COM_KEY_ID
+			,CONTENT
+			,PID
+		)
+		VALUES
+		(
+			 #{reply_key_id}
+			,#{com_key_id}
+			,#{content}
+			,#{pid}
+		)
+	</insert>
+	
+	<update id="replyDelete" parameterType="HashMap">
+		UPDATE
+			BOARD_REPLY_COMMENT
+		SET
+			DEL_YN = 'Y'
+			,UP_DATE = SYSDATE
+		WHERE
+			REPLY_KEY_ID = #{reply_key_id}
+	</update>
+	
+	<update id="replyModify" parameterType="HashMap">
+		UPDATE
+			BOARD_REPLY_COMMENT
+		SET
+			CONTENT = #{content}
+			,UP_DATE = SYSDATE
+		WHERE
+			REPLY_KEY_ID = #{reply_key_id}
+	</update>
+	
+</mapper>

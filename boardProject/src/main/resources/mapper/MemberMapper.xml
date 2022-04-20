@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.MemberMapper">
+	<select id="clientChk" resultType="Integer" parameterType="HashMap">
+       SELECT 
+       		COUNT(PID) 
+       FROM 
+       		MEMBER
+       WHERE
+       		PID = #{pid}
+    </select>
+    
+    <insert id="join" parameterType="HashMap">
+    	INSERT INTO MEMBER
+    	(PID
+    	,PNAME
+    	,NICKNAME
+    	,EMAIL
+    	<if test="phone != null and phone != ''">
+    	,PHONE
+    	</if>
+    	,KIND
+    	)
+    	VALUES
+    	(#{pid}
+    	,#{pName}
+    	,#{nickName}
+    	,#{email}
+    	<if test="phone != null and phone != ''">
+    	,#{phone}
+    	</if>
+    	,#{kind}
+    	)
+    </insert>
+</mapper>

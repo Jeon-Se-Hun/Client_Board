@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+.comList{
+	text-align: left;
+	border: 1px solid #e0e0e0;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+.replyList{
+	text-align: left;
+	border-bottom: 1px solid black;
+	padding: 10px;
+}
+.replyList h3 {
+	margin-top: 0;
+}
+details{
+	margin-top: 10px;
+	background-color: #fff;
+	border : 1px solid #e0e0e0;
+	padding: 0 7px;
+    font-size: 14px;
+    line-height: 20px;
+    width: 60px;
+}
+summary {
+	cursor: pointer;
+}
+details[open] {
+	border: none;
+}
+details[open] summary{
+	border : 1px solid #e0e0e0;
+	width: 60px;
+	padding: 0 7px;
+    font-size: 14px;
+    line-height: 20px;
+}
+.replyDiv{
+	width : 1000px;
+	text-align : center;
+	background-color: #e0e0e0;
+	margin-left: 100px;
+}
+
+.replyInsert{
+	width : 1000px;
+	margin-left: 100px;
+	margin-top: 20px;
+}
+
+.comBtn{
+	width: 100px;
+	background-color: #fff;
+	border : 1px solid #e0e0e0;
+	padding: 0 7px;
+}
+.comList_a{
+	cursor: pointer;
+	color: red;
+}
+
+.comList_a:hover {
+	text-decoration: none;
+	color: red;
+}
+.contentArea{
+	width: 100%;
+    height: 6.25em;
+    border: 1px solid gray;
+    overflow-y: auto;
+    padding: 5px;
+    color : #333;
+  	font-size: 13px;
+}
+
+.likeCheck{
+	border : 1px solid red;
+}
+
+.replyarea{
+	width: 100%;
+    height: 6.25em;
+    border: 1px solid gray;
+    overflow-y: auto;
+    padding: 5px;
+    color : #333;
+  	font-size: 13px;
+}
+
+.re_div{
+	height: 47px;
+	border: 1px solid gray;
+}

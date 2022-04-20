@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.FileMapper">
+	<insert id="upFile" parameterType="HashMap">
+		INSERT INTO UPFILE
+		(
+			FILE_KEY_ID
+			,BOR_KEY_ID
+			,FILEROOT
+			,ORIGINAL_FILE_NAME
+			,SAVED_FILE_NAME
+			,FILE_SIZE
+		)
+		VALUES
+		(
+			#{file_key_id}
+			,#{bor_key_id}
+			,#{fileRoot}
+			,#{original_file_name}
+			,#{saved_file_name}
+			,#{file_size}
+		)
+	</insert>
+
+    <select id="fileDetail" resultType="HashMap">
+    	SELECT
+    		FILE_KEY_ID
+			,FILEROOT
+			,ORIGINAL_FILE_NAME
+			,SAVED_FILE_NAME
+			,FILE_SIZE
+			,REG_DATE
+    	FROM
+    		UPFILE
+    	WHERE
+    		DEL_YN = 'N'
+    		AND BOR_KEY_ID = #{bor_key_id}
+    </select>
+    
+   	<update id="deleteFileAll" parameterType="HashMap">
+		UPDATE
+			UPFILE
+		SET
+			DEL_YN = 'Y'
+			,UP_DATE = SYSDATE
+		WHERE
+			BOR_KEY_ID = #{bor_key_id}
+    </update>
+    
+    <update id="deleteFile" parameterType="List">
+    	UPDATE
+    		UPFILE
+    	SET
+    		DEL_YN = 'Y'
+			,UP_DATE = SYSDATE
+    	WHERE 
+    		FILE_KEY_ID IN(
+    			<foreach collection="list" item="item" separator=","> 
+    			 	#{item} 
+    			</foreach>
+			)
+    </update>
+    
+</mapper>

@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+.wd_80 {
+	width: 80%;
+}
+
+.tm_c{
+	margin-left:auto; 
+    margin-right:auto;
+    margin-top: 50px;
+}
+
+.move button {
+	margin-top: 10px;
+	margin-left : 3px;
+	width: 100px;
+	height: 30px;
+	background: buttonhighlight;
+	border: 0px;
+	font-weight: bold;
+}
+
+.writeTitle>input {
+	width: 100%;
+	height: 30px;
+	border-style: solid;
+	border-color: #828282;
+	border-radius: 0.4em;
+	margin-bottom: 20px;
+}
+
+.createFile {
+	margin-top: 10px;
+}
+.createFile > button {
+	border: 1px solid #ddd;
+	outline: none;
+}
+#input_file {
+	display: none;
+}
+
+#data_file_txt{
+	margin: 20px;
+}
+
+.minus_icon {
+	width : 20px;
+	height : auto;
+	vertical-align : middle;
+	cursor : pointer;
+	margin-left: 3px;
+}
+
+#comment{
+	margin-top : 50px;
+	width: 100%;
+	height: 300px;
+	border: 1px solid groove;
+	text-align: center;
+}
+
+#com_div{
+	height: 47px;
+	border: 1px solid gray;
+}
+.btn_com{
+	width: 68px;
+	height: 45px;
+	border : 1px solid #00b336;
+	background: #00c73c;
+	text-align: center;
+	font-size: 13px;
+	font-weight : 700;
+	line-height : 45px;
+	color: #fff;
+	float: right;
+}
+[contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+}
+#commentBox{
+	width: 100px;
+	float: right;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#textarea{
+	width: 100%;
+    height: 6.25em;
+    border: 1px solid gray;
+    overflow-y: auto;
+    padding: 5px;
+    color : #333;
+  	font-size: 13px;
+}
